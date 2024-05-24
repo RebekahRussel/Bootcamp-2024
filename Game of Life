@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read number of rows and columns
+        System.out.println("Enter the number of rows:");
+        int m = scanner.nextInt();
+        System.out.println("Enter the number of columns:");
+        int n = scanner.nextInt();
+
+        // Initialize the grid
+        int[][] grid = new int[m][n];
+        System.out.println("Enter the Matrix:");
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Create a copy of the grid to store the next state
+        int[][] nextGrid = new int[m][n];
+
+        // Directions array to find all 8 neighbors
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        // Iterate over each cell to determine its next state
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int liveNeighbors = 0;
+
+                // Count live neighbors
+                for (int k = 0; k < 8; k++) {
+                    int ni = i + dx[k];
+                    int nj = j + dy[k];
+
+                    if (ni >= 0 && ni < m && nj >= 0 && nj < n && grid[ni][nj] == 1) {
+                        liveNeighbors++;
+                    }
+                }
+
+                // Apply the Game of Life rules
+                if (grid[i][j] == 1) {
+                    // Live cell rules
+                    if (liveNeighbors < 2 || liveNeighbors > 3) {
+                        nextGrid[i][j] = 0; // Dies
+                    } else {
+                        nextGrid[i][j] = 1; // Lives
+                    }
+                } else {
+                    // Dead cell rules
+                    if (liveNeighbors == 3) {
+                        nextGrid[i][j] = 1; // Becomes live
+                    } else {
+                        nextGrid[i][j] = 0; // Remains dead
+                    }
+                }
+            }
+        }
+
+        // Print the next state of the grid
+        System.out.println("The Resultant Matrix is:");
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(nextGrid[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}
