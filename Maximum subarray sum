@@ -1,0 +1,71 @@
+import java.util.Scanner;
+
+public class MaximumSubarraySum {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Reading the number of elements
+        System.out.println("Enter the number of elements:");
+        int n = scanner.nextInt();
+
+        // Reading the array elements
+        int[] array = new int[n];
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        // Finding the maximum subarray sum using divide and conquer
+        int maxSum = maxSubArraySum(array, 0, n - 1);
+
+        // Printing the result
+        System.out.println("Maximum subarray sum is " + maxSum);
+    }
+
+    private static int maxSubArraySum(int[] array, int left, int right) {
+        if (left == right) {
+            // Base case: only one element
+            return array[left];
+        }
+
+        int mid = (left + right) / 2;
+
+        // Find maximum subarray sum for left subarray
+        int maxLeftSum = maxSubArraySum(array, left, mid);
+
+        // Find maximum subarray sum for right subarray
+        int maxRightSum = maxSubArraySum(array, mid + 1, right);
+
+        // Find maximum subarray sum that crosses the midpoint
+        int maxCrossSum = maxCrossingSum(array, left, mid, right);
+
+        // Return the maximum of the three
+        return Math.max(Math.max(maxLeftSum, maxRightSum), maxCrossSum);
+    }
+
+    private static int maxCrossingSum(int[] array, int left, int mid, int right) {
+        // Include elements on the left of mid
+        int sum = 0;
+        int leftSum = Integer.MIN_VALUE;
+        for (int i = mid; i >= left; i--) {
+            sum += array[i];
+            if (sum > leftSum) {
+                leftSum = sum;
+            }
+        }
+
+        // Include elements on the right of mid
+        sum = 0;
+        int rightSum = Integer.MIN_VALUE;
+        for (int i = mid + 1; i <= right; i++) {
+            sum += array[i];
+            if (sum > rightSum) {
+                rightSum = sum;
+            }
+        }
+
+        // Return sum of elements on the left and right of mid
+        return leftSum + rightSum;
+    }
+}
