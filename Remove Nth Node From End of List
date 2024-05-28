@@ -1,0 +1,87 @@
+import java.util.Scanner;
+class ListNode {
+    int val;
+    ListNode next;
+    
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class LinkedListManipulation {
+
+    // Function to remove the nth node from the end of the list
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = dummy;
+        ListNode second = dummy;
+        
+        // Move first n+1 steps ahead
+        for (int i = 0; i <= n; i++) {
+            if (first == null) {
+                System.out.println("Error: Unable to remove the " + n + "th node from the end.");
+                return head;
+            }
+            first = first.next;
+        }
+        
+        // Move both pointers until first reaches the end
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+        
+        // Remove the nth node from the end
+        second.next = second.next.next;
+        
+        return dummy.next;
+    }
+
+    // Function to print the linked list
+    public static void printList(ListNode head) {
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.val + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Enter the node values (comma-separated): ");
+        String[] nodeValues = scanner.nextLine().split(",");
+        
+        System.out.println("Enter the value of n: ");
+        int n = scanner.nextInt();
+        
+        if (nodeValues.length == 0 || n < 1 || n > nodeValues.length) {
+            System.out.println("Error: Invalid input.");
+            return;
+        }
+        
+        // Create the linked list from the input values
+        ListNode head = new ListNode(Integer.parseInt(nodeValues[0]));
+        ListNode current = head;
+        for (int i = 1; i < nodeValues.length; i++) {
+            current.next = new ListNode(Integer.parseInt(nodeValues[i]));
+            current = current.next;
+        }
+        
+        // Remove the nth node from the end
+        head = removeNthFromEnd(head, n);
+        
+        // Check if the list is empty after removal
+        if (head == null) {
+            System.out.println("Error: Unable to remove the " + n + "th node from the end.");
+        } else {
+            System.out.println("Linked List after removing the " + n + "th node from the end:");
+            printList(head);
+        }
+        
+        scanner.close();
+    }
+}
