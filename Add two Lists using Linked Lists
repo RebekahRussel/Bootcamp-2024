@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+// Definition for singly-linked list node
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+}
+
+public class AddTwoNumbers {
+    
+    // Function to add two numbers represented by linked lists
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode p = l1, q = l2, current = dummyHead;
+        int carry = 0;
+        while (p != null || q != null) {
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            current.next = new ListNode(sum % 10);
+            current = current.next;
+            if (p != null) p = p.next;
+            if (q != null) q = q.next;
+        }
+        if (carry > 0) {
+            current.next = new ListNode(carry);
+        }
+        return dummyHead.next;
+    }
+
+    // Helper function to create a linked list from an array
+    public static ListNode createList(int[] arr) {
+        if (arr.length == 0) return null;
+        ListNode head = new ListNode(arr[0]);
+        ListNode current = head;
+        for (int i = 1; i < arr.length; i++) {
+            current.next = new ListNode(arr[i]);
+            current = current.next;
+        }
+        return head;
+    }
+
+    // Helper function to print a linked list
+    public static void printList(ListNode node) {
+        while (node != null) {
+            System.out.print(node.val);
+            node = node.next;
+            if (node != null) {
+                System.out.print(" ");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input for the first list
+        System.out.println("Enter the element for List 1:");
+        int n = scanner.nextInt();
+        int[] arr1 = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr1[i] = scanner.nextInt();
+        }
+
+        // Input for the second list
+        System.out.println("Enter the element for List 2:");
+        int m = scanner.nextInt();
+        int[] arr2 = new int[m];
+        for (int i = 0; i < m; i++) {
+            arr2[i] = scanner.nextInt();
+        }
+
+        // Creating linked lists from input arrays
+        ListNode l1 = createList(arr1);
+        ListNode l2 = createList(arr2);
+
+        // Adding the two numbers represented by the linked lists
+        ListNode result = addTwoNumbers(l1, l2);
+
+        // Printing the result
+        System.out.println("The List is:");
+        printList(result);
+    }
+}
