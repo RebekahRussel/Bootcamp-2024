@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+// Function to find the maximum amount of water the container can hold
+int maxArea(int heights[], int n) {
+    int maxWater = 0; // Variable to store the maximum amount of water
+    int left = 0; // Pointer to the left wall of the container
+    int right = n - 1; // Pointer to the right wall of the container
+    
+    while (left < right) {
+        // Calculate the current area
+        int currentWater = (right - left) * (heights[left] < heights[right] ? heights[left] : heights[right]);
+        
+        // Update maxWater if the current area is greater
+        if (currentWater > maxWater) {
+            maxWater = currentWater;
+        }
+        
+        // Move the pointer pointing to the shorter wall inward
+        if (heights[left] < heights[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    
+    return maxWater;
+}
+
+int main() {
+    int n;
+    
+    printf("Enter the number of walls of the container: ");
+    scanf("%d", &n);
+
+    int heights[n];
+    
+    printf("Enter the heights of the walls of the container: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &heights[i]);
+    }
+    
+    // Find the maximum amount of water the container can hold
+    int maxWater = maxArea(heights, n);
+
+    printf("The maximum amount of water the container can hold is: %d\n", maxWater);
+
+    return 0;
+}
