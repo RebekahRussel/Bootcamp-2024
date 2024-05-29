@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class RemoveDuplicates {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input number of elements
+        System.out.println("Enter the number of elements in the array:");
+        int n = scanner.nextInt();
+        int[] array = new int[n];
+
+        // Input array elements
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        // Remove duplicates
+        int length = removeDuplicates(array, n);
+
+        // Print length of new array without duplicates
+        System.out.println("The length of the array after removing duplicates is " + length);
+
+        // Print modified array with unique elements
+        System.out.print("The modified array is ");
+        for (int i = 0; i < length; i++) {
+            System.out.print(array[i] + " ");
+        }
+    }
+
+    public static int removeDuplicates(int[] nums, int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+
+        // To store index of next unique element
+        int j = 0;
+
+        // Traverse the array
+        for (int i = 0; i < n - 1; i++) {
+            // If current element is not equal to next element, then store the next element
+            if (nums[i] != nums[i + 1]) {
+                nums[j++] = nums[i];
+            }
+        }
+
+        // Store the last element
+        nums[j++] = nums[n - 1];
+
+        return j;
+    }
+}
