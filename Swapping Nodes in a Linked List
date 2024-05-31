@@ -1,0 +1,107 @@
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class LinkedList {
+
+    Node head;
+
+    // Function to print the linked list
+    void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    // Function to insert a new node at the end
+    void append(int new_data) {
+        Node new_node = new Node(new_data);
+
+        if (head == null) {
+            head = new_node;
+            return;
+        }
+
+        Node last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+        last.next = new_node;
+    }
+
+    // Function to swap nodes at positions x and y
+    void swapNodes(int x, int y) {
+        if (x == y) return;
+
+        // Find previous and current node of x
+        Node prevX = null, currX = head;
+        for (int i = 0; currX != null && i < x; i++) {
+            prevX = currX;
+            currX = currX.next;
+        }
+
+        // Find previous and current node of y
+        Node prevY = null, currY = head;
+        for (int i = 0; currY != null && i < y; i++) {
+            prevY = currY;
+            currY = currY.next;
+        }
+
+        // If either x or y is not present, do nothing
+        if (currX == null || currY == null) return;
+
+        // If x is not head of linked list
+        if (prevX != null) {
+            prevX.next = currY;
+        } else {
+            head = currY;
+        }
+
+        // If y is not head of linked list
+        if (prevY != null) {
+            prevY.next = currX;
+        } else {
+            head = currX;
+        }
+
+        // Swap next pointers
+        Node temp = currX.next;
+        currX.next = currY.next;
+        currY.next = temp;
+    }
+
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        System.out.println("Enter the number of elements:");
+        int n = scanner.nextInt();
+
+        System.out.println("Enter the elements:");
+        for (int i = 0; i < n; i++) {
+            int element = scanner.nextInt();
+            list.append(element);
+        }
+
+        System.out.println("Enter the positions to swap:");
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+
+        list.swapNodes(x, y);
+
+        System.out.println("Linked list after swapping nodes:");
+        list.printList();
+
+        scanner.close();
+    }
+}
