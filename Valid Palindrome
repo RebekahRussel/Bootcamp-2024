@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the input string
+        System.out.println("Enter the string:");
+        String s = scanner.nextLine();
+        
+        // Check if the string is a valid palindrome
+        boolean result = isValidPalindrome(s);
+        
+        // Print the result
+        System.out.println(result);
+    }
+
+    public static boolean isValidPalindrome(String s) {
+        // Normalize the string: convert to lowercase and remove non-alphanumeric characters
+        StringBuilder normalizedStr = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                normalizedStr.append(Character.toLowerCase(c));
+            }
+        }
+        
+        // Check if the normalized string is a palindrome
+        String normalized = normalizedStr.toString();
+        int left = 0;
+        int right = normalized.length() - 1;
+        
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        
+        return true;
+    }
+}
