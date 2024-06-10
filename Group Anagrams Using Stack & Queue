@@ -1,0 +1,55 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of strings
+        System.out.println("Enter the number of strings:");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume the newline character
+
+        // Read the strings
+        System.out.println("Enter the strings separated by spaces:");
+        String[] strs = new String[n];
+        for (int i = 0; i < n; i++) {
+            strs[i] = scanner.next();
+        }
+
+        // Group anagrams
+        List<Queue<String>> groupedAnagrams = groupAnagrams(strs);
+
+        // Print the grouped anagrams
+        System.out.println("The grouped anagrams are:");
+        for (Queue<String> group : groupedAnagrams) {
+            while (!group.isEmpty()) {
+                System.out.print(group.poll() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static List<Queue<String>> groupAnagrams(String[] strs) {
+        Map<String, Stack<String>> map = new HashMap<>();
+
+        for (String s : strs) {
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String sorted = new String(chars);
+
+            map.putIfAbsent(sorted, new Stack<>());
+            map.get(sorted).push(s);
+        }
+
+        List<Queue<String>> result = new ArrayList<>();
+        for (Stack<String> stack : map.values()) {
+            Queue<String> queue = new LinkedList<>();
+            while (!stack.isEmpty()) {
+                queue.add(stack.pop());
+            }
+            result.add(queue);
+        }
+
+        return result;
+    }
+}
