@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the number of strings
+        System.out.println("Enter the number of strings:");
+        int n = scanner.nextInt();
+        scanner.nextLine();  // Consume the newline character
+
+        // Read the strings
+        String[] strings = new String[n];
+        System.out.println("Enter the strings:");
+        for (int i = 0; i < n; i++) {
+            strings[i] = scanner.nextLine();
+        }
+
+        // Find the longest common prefix
+        String longestCommonPrefix = findLongestCommonPrefix(strings);
+
+        // Print the result
+        System.out.println("Longest common prefix:");
+        System.out.println(longestCommonPrefix);
+    }
+
+    public static String findLongestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            while (strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+
+        return prefix;
+    }
+}
