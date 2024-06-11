@@ -1,0 +1,30 @@
+// Java program for the above approach
+public class RepeatingDigits {
+
+	// Function to count the number of repeating digits 
+// in a given number
+	public static int countRepeatingDigits(int num) {
+		int count = 0;
+		String strNum = Integer.toString(num); // Convert the number to a string
+
+		// Outer loop to iterate through each digit in the number
+		for (int i = 0; i < strNum.length(); i++) {
+			// Inner loop to compare the current digit with subsequent digits
+			for (int j = i + 1; j < strNum.length(); j++) {
+				// Check if the current digit (at index i) is equal to the subsequent digit (at index j)
+				if (strNum.charAt(i) == strNum.charAt(j)) {
+					count++; // Increment count if a repeating digit is found
+					break; // Exit the inner loop once a repeating digit is found
+				}
+			}
+		}
+
+		return count;
+	}
+
+	public static void main(String[] args) {
+		int num = 99677;
+		int repeatingDigits = countRepeatingDigits(num);
+		System.out.println("Number of repeating digits: " + repeatingDigits);
+	}
+}
