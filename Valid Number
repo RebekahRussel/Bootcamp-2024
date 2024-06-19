@@ -1,0 +1,37 @@
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+public class ValidNumberChecker {
+    // Regular expression to match a valid number
+    private static final String NUMBER_REGEX = "^[+-]?((\\d+(\\.\\d*)?)|(\\.\\d+))([eE][+-]?\\d+)?$";
+
+    public static void main(String[] args) {
+        // Create a scanner object for reading input
+        Scanner scanner = new Scanner(System.in);
+
+        // Read the input string
+        System.out.print("Enter the string : ");
+        String inputString = scanner.nextLine();
+
+        // Output the input string
+        System.out.println("The input string is \"" + inputString + "\"");
+
+        // Check if the string is a valid number
+        boolean isValid = isValidNumber(inputString);
+
+        // Output the result
+        System.out.println("The string is a valid number: " + isValid);
+
+        // Close the scanner
+        scanner.close();
+    }
+
+    // Method to check if a string is a valid number
+    public static boolean isValidNumber(String s) {
+        // Compile the regular expression
+        Pattern pattern = Pattern.compile(NUMBER_REGEX);
+
+        // Check if the string matches the pattern
+        return pattern.matcher(s).matches();
+    }
+}
